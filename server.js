@@ -7,6 +7,7 @@ let fetch = require('node-fetch');
 const postRoute = require('./routes/posts');
 //import routes
 const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
 
 app.use(cors());
 dotenv.config();
@@ -20,8 +21,9 @@ mongoose.connect('mongodb+srv://devskup:devskup666@cluster0-pa9ta.mongodb.net/te
 app.use(express.json());
 
 // route middleware
-app.use('/api/user', authRoute);
-app.use('/api/posts',postRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/posts', postRoute);
+app.use('/api/user', userRoute);
 
 const port = process.env.PORT || 5000;
 

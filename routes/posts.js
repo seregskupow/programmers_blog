@@ -3,6 +3,7 @@ const verify = require('./verifyToken');
 const User = require("../model/User");
 const Post = require('../model/Post');
 
+//Post post to db
 router.post("/",verify, async (req, res) => {
   const token = req.header('auth-token');
   const id = req.user._id;
@@ -21,5 +22,25 @@ router.post("/",verify, async (req, res) => {
 }
   
 });
+//Get all posts from db
+router.get("/showall", async (req,res)=>{
+  try{
+    const allPosts = await Post.find();
+    res.json(allPosts);
+  }catch(err){
 
+  }
+
+})
+
+//find user posts
+router.get("/userposts",async (req,res)=>{
+  const user = req.query.user;
+  try{
+    const userPosts = await Post.find({name:user});
+    res.json(userPosts);
+  }catch(err){
+    res.status(400).send("user not found");
+  }
+})
 module.exports = router;
